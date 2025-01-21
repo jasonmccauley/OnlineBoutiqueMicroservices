@@ -1,0 +1,204 @@
+# adservice RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: adservice-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: adservice-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: adservice
+  namespace: default
+roleRef:
+  kind: Role
+  name: adservice-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# cartservice RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cartservice-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list"]
+  resourceNames: ["redis-cart"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cartservice-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: cartservice
+  namespace: default
+roleRef:
+  kind: Role
+  name: cartservice-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# frontend RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: frontend-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: frontend-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: frontend
+  namespace: default
+roleRef:
+  kind: Role
+  name: frontend-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# loadgenerator RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: loadgenerator-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get"]
+  resourceNames: ["frontend"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: loadgenerator-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: loadgenerator
+  namespace: default
+roleRef:
+  kind: Role
+  name: loadgenerator-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# paymentservice RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: paymentservice-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: paymentservice-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: paymentservice
+  namespace: default
+roleRef:
+  kind: Role
+  name: paymentservice-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# productcatalogservice RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: productcatalogservice-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: productcatalogservice-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: productcatalogservice
+  namespace: default
+roleRef:
+  kind: Role
+  name: productcatalogservice-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# recommendationservice RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: recommendationservice-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: recommendationservice-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: recommendationservice
+  namespace: default
+roleRef:
+  kind: Role
+  name: recommendationservice-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# shippingservice RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: shippingservice-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: shippingservice-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: shippingservice
+  namespace: default
+roleRef:
+  kind: Role
+  name: shippingservice-role
+  apiGroup: rbac.authorization.k8s.io

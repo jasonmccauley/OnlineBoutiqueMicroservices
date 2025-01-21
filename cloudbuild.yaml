@@ -1,0 +1,9 @@
+steps:
+- id: "Deploy application to cluster"
+  name: "gcr.io/k8s-skaffold/skaffold:v2.12.2"
+  args:
+    - "skaffold"
+    - "run"
+    - "--profile=prod"
+    - "--default-repo=us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo"
+    - "--filename=skaffold.yaml"

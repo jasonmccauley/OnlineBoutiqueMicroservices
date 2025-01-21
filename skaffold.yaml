@@ -1,0 +1,48 @@
+apiVersion: skaffold/v4beta5
+kind: Config
+metadata:
+  name: online-boutique
+build:
+  artifacts:
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/adservice
+      context: ./src/adservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/cartservice
+      context: ./src/cartservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/checkoutservice
+      context: ./src/checkoutservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/currencyservice
+      context: ./src/currencyservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/emailservice
+      context: ./src/emailservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/frontend
+      context: ./src/frontend
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/loadgenerator
+      context: ./src/loadgenerator
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/paymentservice
+      context: ./src/paymentservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/productcatalogservice
+      context: ./src/productcatalogservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/recommendationservice
+      context: ./src/recommendationservice
+    - image: us-central1-docker.pkg.dev/automated-modem-443600-h5/docker-repo/shippingservice
+      context: ./src/shippingservice
+deploy:
+  kubectl:
+    manifests:
+      - ./kubernetes-manifests/*.yaml
+profiles:
+  - name: dev
+    build:
+      local:
+        push: false
+    deploy:
+      kubectl: {}
+  - name: prod
+    build:
+      local:
+        push: true
+    deploy:
+      kubectl:
+        flags:
+          apply:
+            - --namespace=prod
